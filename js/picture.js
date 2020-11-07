@@ -12,13 +12,28 @@
     return node;
   };
 
+  let pictureData = [];
+
   const addPictures = (data) => {
+    pictureData = data;
     const fragment = document.createDocumentFragment();
     data.forEach((item) => {
       fragment.appendChild(createPicture(item));
-    })
+    });
     picturesContainer.appendChild(fragment);
-  }
+  };
 
   window.load(addPictures);
+
+  picturesContainer.addEventListener(`click`, function (evt) {
+    if (evt.target.matches(`img`)) {
+      const pictureElements = picturesContainer.querySelectorAll(`.picture`);
+      const index = Array.from(pictureElements).indexOf(evt.target.parentElement);
+      window.bigPicture.show(pictureData[index]);
+    }
+  });
+
+  window.picture = {
+    pictureData,
+  };
 })();

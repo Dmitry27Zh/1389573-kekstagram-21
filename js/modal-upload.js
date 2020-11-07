@@ -6,14 +6,16 @@
   const showModal = () => {
     modal.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
-  }
+  };
 
   const closeModal = () => {
     modal.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
-  }
+  };
 
-  window.modal = {
+  showModal();
+
+  window.modalUpload = {
     element: modal,
   };
 })();
