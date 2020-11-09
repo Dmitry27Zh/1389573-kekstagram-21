@@ -26,7 +26,7 @@
   window.load(addPictures);
 
   picturesContainer.addEventListener(`click`, function (evt) {
-    if (evt.target.matches(`img`)) {
+    if (evt.target.matches(`.picture img`)) {
       const pictureElements = picturesContainer.querySelectorAll(`.picture`);
       const index = Array.from(pictureElements).indexOf(evt.target.parentElement);
       window.bigPicture.show(pictureData[index]);
