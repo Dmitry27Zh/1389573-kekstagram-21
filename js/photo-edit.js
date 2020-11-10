@@ -77,8 +77,8 @@
     effectValue.value = perc;
   };
 
-  const getFilterValue = (newCoord) => {
-    const perc = newCoord * 100 / effectLine.offsetWidth;
+  const getFilterValue = () => {
+    const perc = effectValue.value;
     const effectName = effectControlsContainer.querySelector(`input:checked`).value;
     const min = filterStyleValues[effectName].min;
     const max = filterStyleValues[effectName].max;
@@ -87,8 +87,8 @@
     return template.replace(`{value}`, result);
   };
 
-  const setFilterOnImage = (newCoord) => {
-    const newValue = getFilterValue(newCoord);
+  const setFilterOnImage = () => {
+    const newValue = getFilterValue();
     imageElement.style.filter = newValue;
   };
 
@@ -114,7 +114,7 @@
     window.move(evt, (move) => {
       const newCoord = getPinCoord(move.x);
       setEffectLevelControls(newCoord);
-      setFilterOnImage(newCoord);
+      setFilterOnImage();
     });
   };
 
