@@ -5,6 +5,7 @@
 
   const isEscEvent = (evt, action) => {
     if (evt.key === ESC_KEY) {
+      evt.preventDefault();
       action();
     }
   };

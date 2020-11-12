@@ -23,7 +23,7 @@
     picturesContainer.appendChild(fragment);
   };
 
-  window.load(addPictures);
+  window.backend.load(addPictures);
 
   picturesContainer.addEventListener(`click`, (evt) => {
     if (evt.target.matches(`.picture img`)) {

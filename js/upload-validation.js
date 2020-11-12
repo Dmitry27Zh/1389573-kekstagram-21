@@ -1,11 +1,10 @@
 'use strict';
 
 (function () {
-  const hashtagsInput = document.querySelector(`.text__hashtags`);
+  const hashtagsInput = window.uploadForm.element.querySelector(`.text__hashtags`);
   const re = /^#[\w]*$/;
-  const comment = document.querySelector(`.text__description`);
 
-  hashtagsInput.addEventListener(`input`, () => {
+  const hashtagsInputHandler = () => {
     const hashtags = hashtagsInput.value.split(` `).map((hashtag) => {
       return hashtag.toLowerCase();
     });
@@ -28,5 +27,18 @@
     }
     hashtagsInput.setCustomValidity(errorMessage);
     hashtagsInput.reportValidity();
-  });
+  };
+
+  const addValidation = () => {
+    hashtagsInput.addEventListener(`input`, hashtagsInputHandler);
+  };
+
+  const removeValidation = () => {
+    hashtagsInput.removeEventListener(`input`, hashtagsInputHandler);
+  };
+
+  window.uploadValidation = {
+    add: addValidation,
+    remove: removeValidation,
+  };
 })();

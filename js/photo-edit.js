@@ -1,18 +1,18 @@
 'use strict';
 
 (function () {
-  const modal = window.modalUpload.element;
-  const scaleControlSmaller = modal.querySelector(`.scale__control--smaller`);
-  const scaleControlBigger = modal.querySelector(`.scale__control--bigger`);
-  const scaleControlValue = modal.querySelector(`.scale__control--value`);
+  const uploadForm = window.uploadForm.element;
+  const scaleControlSmaller = uploadForm.querySelector(`.scale__control--smaller`);
+  const scaleControlBigger = uploadForm.querySelector(`.scale__control--bigger`);
+  const scaleControlValue = uploadForm.querySelector(`.scale__control--value`);
   const ScaleParameters = {
     MIN_VALUE: 25,
     MAX_VALUE: 100,
     STEP: 25,
   };
-  const imageElement = modal.querySelector(`.img-upload__preview img`);
-  const effectControlsContainer = modal.querySelector(`.img-upload__effects`);
-  const effectLevelContainer = modal.querySelector(`.effect-level`);
+  const imageElement = uploadForm.querySelector(`.img-upload__preview img`);
+  const effectControlsContainer = uploadForm.querySelector(`.img-upload__effects`);
+  const effectLevelContainer = uploadForm.querySelector(`.effect-level`);
   const effectValue = effectLevelContainer.querySelector(`.effect-level__value`);
   const effectLine = effectLevelContainer.querySelector(`.effect-level__line`);
   const effectPin = effectLine.querySelector(`.effect-level__pin`);
@@ -130,13 +130,17 @@
     effectValue.value = 0;
   };
 
-  const effectControlClickHandler = (evt) => {
-    const effectName = evt.target.value === `none` ? null : evt.target.value;
-    removeFilter();
+  const changeEffect = (effectName) => {
     if (effectName) {
       imageElement.classList.add(`effects__preview--${effectName}`);
       setEffectLevelControls(effectLine.offsetWidth);
     }
+  };
+
+  const effectControlClickHandler = (evt) => {
+    const effectName = evt.target.value === `none` ? null : evt.target.value;
+    removeFilter();
+    changeEffect(effectName);
     if (effectName && effectLevelContainer.classList.contains(`visually-hidden`)) {
       showEffectLevelLine();
     } else if (!effectName) {

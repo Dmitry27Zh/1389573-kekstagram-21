@@ -2,12 +2,29 @@
 
 (function () {
   const imageElement = window.photoEdit.imageElement;
-  const uploadElement = document.querySelector(`#upload-file`);
+  const uploadElement = window.uploadForm.element.querySelector(`#upload-file`);
 
-  const onUpload = (evt) => {
-    evt.preventDefault();
-    window.modalUpload.show();
+  const activatePhotoUpload = () => {
+    window.uploadForm.addRequest();
+    window.photoEdit.activate();
+    window.uploadValidation.add();
+    window.dialogUpload.show();
   };
 
-  uploadElement.addEventListener(`click`, onUpload);
+  const deactivatePhotoUpload = () => {
+    window.uploadForm.removeRequest();
+    window.photoEdit.deactivate();
+    window.uploadValidation.remove();
+    window.dialogUpload.close();
+  };
+
+  const onUpload = () => {
+    window.setPreview(uploadElement, imageElement, activatePhotoUpload);
+  };
+
+  uploadElement.addEventListener(`change`, onUpload);
+
+  window.photoUpload = {
+    deactivate: deactivatePhotoUpload,
+  };
 })();

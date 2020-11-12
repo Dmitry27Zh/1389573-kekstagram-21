@@ -2,17 +2,33 @@
 
 (function () {
   const LOAD_URL = `https://21.javascript.pages.academy/kekstagram/data`;
+  const SEND_URL = `https://21.javascript.pages.academy/kekstagram `;
 
   const load = (onSuccess) => {
     const xhr = new XMLHttpRequest();
     xhr.open(`get`, LOAD_URL);
     xhr.responseType = `json`;
-    xhr.addEventListener(`load`, function () {
-      console.log(xhr.response);
+    xhr.addEventListener(`load`, () => {
       onSuccess(xhr.response);
     });
     xhr.send();
-  }
+  };
 
-  window.load = load;
+  const send = (data, onSuccess, onError) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(`POST`, SEND_URL);
+    xhr.responseType = `json`;
+    xhr.addEventListener(`load`, () => {
+      onSuccess();
+    });
+    xhr.addEventListener(`error`, () => {
+      onError();
+    });
+    xhr.send(data);
+  };
+
+  window.backend = {
+    load,
+    send,
+  };
 })();
