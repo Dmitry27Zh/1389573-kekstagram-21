@@ -31,7 +31,6 @@
 
   const bigPictureKeydownHandler = (evt) => {
     window.utils.isEscEvent(evt, closeBigPicture);
-    console.log(evt.key)
   };
 
   const showBigPicture = (item) => {
