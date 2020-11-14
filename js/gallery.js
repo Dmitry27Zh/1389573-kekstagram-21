@@ -14,16 +14,21 @@
 
   let pictureData = [];
 
-  const addPictures = (data) => {
-    pictureData = data;
+  const addPictures = (picturesData) => {
     const fragment = document.createDocumentFragment();
-    data.forEach((item) => {
+    picturesData.forEach((item) => {
       fragment.appendChild(createPicture(item));
     });
     picturesContainer.appendChild(fragment);
   };
 
-  window.backend.load(addPictures);
+  const onSuccessLoad = (data) => {
+    pictureData = data;
+    addPictures(data);
+    window.addFiltration();
+  };
+
+  window.backend.load(onSuccessLoad);
 
   picturesContainer.addEventListener(`click`, (evt) => {
     if (evt.target.matches(`.picture img`)) {
