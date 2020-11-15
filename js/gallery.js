@@ -30,15 +30,18 @@
 
   window.backend.load(onSuccessLoad);
 
-  picturesContainer.addEventListener(`click`, (evt) => {
+  const picturesContainerClickHandler = (evt) => {
     if (evt.target.matches(`.picture img`)) {
       const pictureElements = picturesContainer.querySelectorAll(`.picture`);
       const index = Array.from(pictureElements).indexOf(evt.target.parentElement);
       window.bigPicture.show(pictureData[index]);
     }
-  });
+  };
 
-  window.picture = {
+  picturesContainer.addEventListener(`click`, picturesContainerClickHandler);
+
+  window.gallery = {
     pictureData,
+    picturesContainer,
   };
 })();

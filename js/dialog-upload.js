@@ -7,15 +7,13 @@
   const modalCloseClickHandler = () => {
     closeModal();
     window.photoUpload.deactivate();
-    modalClose.removeEventListener(`click`, modalCloseClickHandler);
-    document.removeEventListener(`keydown`, modalCloseKeydownHandler);
   };
 
   const modalCloseKeydownHandler = (evt) => {
-    window.utils.isEscEvent(evt, closeModal);
-    window.uploadForm.element.reset();
-    modalClose.removeEventListener(`click`, modalCloseClickHandler);
-    document.removeEventListener(`keydown`, modalCloseKeydownHandler);
+    window.utils.isEscEvent(evt, () => {
+      closeModal();
+      window.uploadForm.element.reset();
+    });
   };
 
   const showModal = () => {
@@ -28,6 +26,8 @@
   const closeModal = () => {
     modal.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
+    modalClose.removeEventListener(`click`, modalCloseClickHandler);
+    document.removeEventListener(`keydown`, modalCloseKeydownHandler);
   };
 
   window.dialogUpload = {
