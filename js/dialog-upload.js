@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  const modal = window.uploadForm.element.querySelector(`.img-upload__overlay`);
-  const modalClose = modal.querySelector(`.img-upload__cancel`);
+  const modalElement = window.uploadForm.element.querySelector(`.img-upload__overlay`);
+  const modalCloseElement = modalElement.querySelector(`.img-upload__cancel`);
 
   const modalCloseClickHandler = () => {
     closeModal();
@@ -17,21 +17,21 @@
   };
 
   const showModal = () => {
-    modal.classList.remove(`hidden`);
+    modalElement.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
-    modalClose.addEventListener(`click`, modalCloseClickHandler);
+    modalCloseElement.addEventListener(`click`, modalCloseClickHandler);
     document.addEventListener(`keydown`, modalCloseKeydownHandler);
   };
 
   const closeModal = () => {
-    modal.classList.add(`hidden`);
+    modalElement.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
-    modalClose.removeEventListener(`click`, modalCloseClickHandler);
+    modalCloseElement.removeEventListener(`click`, modalCloseClickHandler);
     document.removeEventListener(`keydown`, modalCloseKeydownHandler);
   };
 
   window.dialogUpload = {
-    element: modal,
+    element: modalElement,
     show: showModal,
     close: closeModal,
   };

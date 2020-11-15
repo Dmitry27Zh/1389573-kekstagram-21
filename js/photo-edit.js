@@ -1,22 +1,22 @@
 'use strict';
 
 (function () {
-  const uploadForm = window.uploadForm.element;
-  const scaleControlSmaller = uploadForm.querySelector(`.scale__control--smaller`);
-  const scaleControlBigger = uploadForm.querySelector(`.scale__control--bigger`);
-  const scaleControlValue = uploadForm.querySelector(`.scale__control--value`);
+  const uploadFormElement = window.uploadForm.element;
+  const scaleControlSmallerElement = uploadFormElement.querySelector(`.scale__control--smaller`);
+  const scaleControlBiggerElement = uploadFormElement.querySelector(`.scale__control--bigger`);
+  const scaleControlValueElement = uploadFormElement.querySelector(`.scale__control--value`);
   const ScaleParameters = {
     MIN_VALUE: 25,
     MAX_VALUE: 100,
     STEP: 25,
   };
-  const imageElement = uploadForm.querySelector(`.img-upload__preview img`);
-  const effectControlsContainer = uploadForm.querySelector(`.img-upload__effects`);
-  const effectLevelContainer = uploadForm.querySelector(`.effect-level`);
-  const effectValue = effectLevelContainer.querySelector(`.effect-level__value`);
-  const effectLine = effectLevelContainer.querySelector(`.effect-level__line`);
-  const effectPin = effectLine.querySelector(`.effect-level__pin`);
-  const effectDepth = effectLine.querySelector(`.effect-level__depth`);
+  const imageElement = uploadFormElement.querySelector(`.img-upload__preview img`);
+  const effectControlsContainerElement = uploadFormElement.querySelector(`.img-upload__effects`);
+  const effectLevelContainerElement = uploadFormElement.querySelector(`.effect-level`);
+  const effectValueElement = effectLevelContainerElement.querySelector(`.effect-level__value`);
+  const effectLineElement = effectLevelContainerElement.querySelector(`.effect-level__line`);
+  const effectPinElement = effectLineElement.querySelector(`.effect-level__pin`);
+  const effectDepthElement = effectLineElement.querySelector(`.effect-level__depth`);
   const filterStyleValues = {
     chrome: {
       min: 0,
@@ -46,7 +46,7 @@
   };
 
   const setScaleValue = (value) => {
-    scaleControlValue.value = `${value}%`;
+    scaleControlValueElement.value = `${value}%`;
   };
 
   const setImgScale = (value) => {
@@ -71,15 +71,15 @@
   const scaleControlClickHandler = changeScale();
 
   const setEffectLevelControls = (newCoord) => {
-    effectPin.style.left = `${newCoord}px`;
-    effectDepth.style.width = `${newCoord}px`;
-    const perc = newCoord * 100 / effectLine.offsetWidth;
-    effectValue.value = perc;
+    effectPinElement.style.left = `${newCoord}px`;
+    effectDepthElement.style.width = `${newCoord}px`;
+    const perc = newCoord * 100 / effectLineElement.offsetWidth;
+    effectValueElement.value = perc;
   };
 
   const getFilterValue = () => {
-    const perc = effectValue.value;
-    const effectName = effectControlsContainer.querySelector(`input:checked`).value;
+    const perc = effectValueElement.value;
+    const effectName = effectControlsContainerElement.querySelector(`input:checked`).value;
     const min = filterStyleValues[effectName].min;
     const max = filterStyleValues[effectName].max;
     const template = filterStyleValues[effectName].template;
@@ -100,8 +100,8 @@
   const onEffectLevelPinMove = (evt) => {
     const getPinCoord = (moveX) => {
       const minCoord = 0;
-      const maxCoord = effectLine.offsetWidth;
-      let coordX = effectPin.offsetLeft - moveX;
+      const maxCoord = effectLineElement.offsetWidth;
+      let coordX = effectPinElement.offsetLeft - moveX;
       if (coordX < minCoord) {
         coordX = minCoord;
       }
@@ -119,21 +119,21 @@
   };
 
   const showEffectLevelLine = () => {
-    effectLevelContainer.classList.remove(`visually-hidden`);
-    setEffectLevelControls(effectLine.offsetWidth);
-    effectPin.addEventListener(`mousedown`, onEffectLevelPinMove);
+    effectLevelContainerElement.classList.remove(`visually-hidden`);
+    setEffectLevelControls(effectLineElement.offsetWidth);
+    effectPinElement.addEventListener(`mousedown`, onEffectLevelPinMove);
   };
 
   const closeEffectLevelLine = () => {
-    effectLevelContainer.classList.add(`visually-hidden`);
-    effectPin.removeEventListener(`mousedown`, onEffectLevelPinMove);
-    effectValue.value = 0;
+    effectLevelContainerElement.classList.add(`visually-hidden`);
+    effectPinElement.removeEventListener(`mousedown`, onEffectLevelPinMove);
+    effectValueElement.value = 0;
   };
 
   const changeEffect = (effectName) => {
     if (effectName) {
       imageElement.classList.add(`effects__preview--${effectName}`);
-      setEffectLevelControls(effectLine.offsetWidth);
+      setEffectLevelControls(effectLineElement.offsetWidth);
     }
   };
 
@@ -141,7 +141,7 @@
     const effectName = evt.target.value === `none` ? null : evt.target.value;
     removeFilter();
     changeEffect(effectName);
-    if (effectName && effectLevelContainer.classList.contains(`visually-hidden`)) {
+    if (effectName && effectLevelContainerElement.classList.contains(`visually-hidden`)) {
       showEffectLevelLine();
     } else if (!effectName) {
       closeEffectLevelLine();
@@ -152,16 +152,16 @@
     setScaleValue(ScaleParameters.MAX_VALUE);
     setImgScale(ScaleParameters.MAX_VALUE);
     closeEffectLevelLine();
-    scaleControlSmaller.addEventListener(`click`, scaleControlClickHandler);
-    scaleControlBigger.addEventListener(`click`, scaleControlClickHandler);
-    effectControlsContainer.addEventListener(`change`, effectControlClickHandler);
+    scaleControlSmallerElement.addEventListener(`click`, scaleControlClickHandler);
+    scaleControlBiggerElement.addEventListener(`click`, scaleControlClickHandler);
+    effectControlsContainerElement.addEventListener(`change`, effectControlClickHandler);
   };
 
   const deactivatePhotoEdit = () => {
     removeFilter();
-    scaleControlSmaller.removeEventListener(`click`, scaleControlClickHandler);
-    scaleControlBigger.removeEventListener(`click`, scaleControlClickHandler);
-    effectControlsContainer.removeEventListener(`click`, effectControlClickHandler);
+    scaleControlSmallerElement.removeEventListener(`click`, scaleControlClickHandler);
+    scaleControlBiggerElement.removeEventListener(`click`, scaleControlClickHandler);
+    effectControlsContainerElement.removeEventListener(`click`, effectControlClickHandler);
   };
 
   window.photoEdit = {

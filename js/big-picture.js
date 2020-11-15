@@ -1,13 +1,14 @@
 'use strict';
 
 (function () {
-  const bigPicture = document.querySelector(`.big-picture`);
-  const picture = bigPicture.querySelector(`.big-picture__img img`);
-  const caption = bigPicture.querySelector(`.social__caption`);
-  const likes = bigPicture.querySelector(`.likes-count`);
-  const commentsContainer = bigPicture.querySelector(`.social__comments`);
-  const commentElement = commentsContainer.querySelector(`.social__comment`);
-  const closeButton = bigPicture.querySelector(`#picture-cancel`);
+  const bigPictureElement = document.querySelector(`.big-picture`);
+  const pictureElement = bigPictureElement.querySelector(`.big-picture__img img`);
+  const captionElement = bigPictureElement.querySelector(`.social__caption`);
+  const likesElement = bigPictureElement.querySelector(`.likes-count`);
+  const commentsContainerElement = bigPictureElement.querySelector(`.social__comments`);
+  const commentElement = commentsContainerElement.querySelector(`.social__comment`);
+  const closeButtonElement = bigPictureElement.querySelector(`#picture-cancel`);
+  const commentLoaderElement = bigPictureElement.querySelector(`.comments-loader`);
   const COMMENTS_MAX_QUANTITY = 5;
 
   const createComment = (comment) => {
@@ -18,11 +19,34 @@
   };
 
   const addComments = (comments) => {
-    commentsContainer.innerHTML = ``;
+    commentsContainerElement.innerHTML = ``;
     const commentsQuantity = comments.length > COMMENTS_MAX_QUANTITY ? COMMENTS_MAX_QUANTITY : comments.length;
     for (let i = 0; i < commentsQuantity; i++) {
-      commentsContainer.appendChild(createComment(comments[i]));
+      commentsContainerElement.appendChild(createComment(comments[i]));
     }
+    if (commentsQuantity === comments.length) {
+      commentLoaderElement.classList.add(`hidden`);
+    } else {
+      commentLoaderElement.classList.remove(`hidden`);
+    }
+  };
+
+  const commentsLoader = (loadedCommentsQuantity) => {
+    return (comments) => {
+      console.log(loadedCommentsQuantity)
+      const remainingComments = comments.length - loadedCommentsQuantity;
+      const commentsQuantity = remainingComments > COMMENTS_MAX_QUANTITY ? COMMENTS_MAX_QUANTITY : remainingComments;
+      if (commentsQuantity) {
+        for (let i = loadedCommentsQuantity; i < loadedCommentsQuantity + commentsQuantity; i++) {
+          commentsContainerElement.appendChild(createComment(comments[i]));
+        }
+      }
+      loadedCommentsQuantity += commentsQuantity;
+      console.log(loadedCommentsQuantity, comments.length)
+      if (loadedCommentsQuantity === comments.length) {
+        commentLoaderElement.classList.add(`hidden`);
+      }
+    };
   };
 
   const closeButtonClickHandler = () => {
@@ -34,20 +58,24 @@
   };
 
   const showBigPicture = (item) => {
-    picture.src = item.url;
-    caption.textContent = item.description;
-    likes.textContent = item.likes;
+    pictureElement.src = item.url;
+    captionElement.textContent = item.description;
+    likesElement.textContent = item.likes;
     addComments(item.comments);
-    bigPicture.classList.remove(`hidden`);
+    bigPictureElement.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
-    closeButton.addEventListener(`click`, closeButtonClickHandler);
+    const loadMoreComments = commentsLoader(commentsContainerElement.children.length);
+    commentLoaderElement.addEventListener(`click`, () => {
+      loadMoreComments(item.comments);
+    });
+    closeButtonElement.addEventListener(`click`, closeButtonClickHandler);
     document.addEventListener(`keydown`, bigPictureKeydownHandler);
   };
 
   const closeBigPicture = () => {
-    bigPicture.classList.add(`hidden`);
+    bigPictureElement.classList.add(`hidden`);
     document.body.classList.remove(`modal-open`);
-    closeButton.removeEventListener(`click`, closeButtonClickHandler);
+    closeButtonElement.removeEventListener(`click`, closeButtonClickHandler);
     document.removeEventListener(`keydown`, bigPictureKeydownHandler);
   };
 

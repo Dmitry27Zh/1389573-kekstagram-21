@@ -4,7 +4,7 @@
   const filtersContainerElement = document.querySelector(`.img-filters`);
   const filtersFormElement = filtersContainerElement.querySelector(`.img-filters__form`);
   const RANDOM_PICTURES_QUANTITY = 10;
-  const picturesContainer = window.gallery.picturesContainer;
+  const picturesContainerElement = window.gallery.picturesContainerElement;
 
   const showHiddenPicture = (picture) => {
     if (picture.classList.contains(`visually-hidden`)) {
@@ -29,14 +29,14 @@
     });
     sortedPicturesByComments.forEach((picture) => {
       showHiddenPicture(picture);
-      picturesContainer.appendChild(picture);
+      picturesContainerElement.appendChild(picture);
     });
   };
 
   const showDefaultPictures = (pictureElements) => {
     pictureElements.forEach((picture) => {
       showHiddenPicture(picture);
-      picturesContainer.appendChild(picture);
+      picturesContainerElement.appendChild(picture);
     });
   };
 
