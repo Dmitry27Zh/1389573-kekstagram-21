@@ -8,6 +8,7 @@
     window.uploadForm.addRequest();
     window.photoEdit.activate();
     window.uploadValidation.add();
+    window.checkFocus.on();
     window.dialogUpload.show();
   };
 
@@ -15,6 +16,7 @@
     window.uploadForm.removeRequest();
     window.photoEdit.deactivate();
     window.uploadValidation.remove();
+    window.checkFocus.off();
     window.dialogUpload.close();
   };
 

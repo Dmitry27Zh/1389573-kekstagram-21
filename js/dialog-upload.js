@@ -11,8 +11,10 @@
 
   const modalCloseKeydownHandler = (evt) => {
     window.utils.isEscEvent(evt, () => {
-      closeModal();
-      window.uploadForm.element.reset();
+      if (!window.checkFocus.isInputFocused()) {
+        closeModal();
+        window.uploadForm.element.reset();
+      }
     });
   };
 
