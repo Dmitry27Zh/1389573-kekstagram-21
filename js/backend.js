@@ -1,13 +1,20 @@
 'use strict';
 
 (function () {
-  const LOAD_URL = `https://21.javascript.pages.academy/kekstagram/data`;
-  const SEND_URL = `https://21.javascript.pages.academy/kekstagram `;
+  const URL = {
+    get: `https://21.javascript.pages.academy/kekstagram/data`,
+    POST: `https://21.javascript.pages.academy/kekstagram `,
+  };
+
+  const createRequest = (method) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, URL[method]);
+    xhr.responseType = `json`;
+    return xhr;
+  };
 
   const load = (onSuccess, onError) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(`get`, LOAD_URL);
-    xhr.responseType = `json`;
+    const xhr = createRequest(`get`);
     xhr.addEventListener(`load`, () => {
       onSuccess(xhr.response);
     });
@@ -18,9 +25,7 @@
   };
 
   const send = (data, onSuccess, onError) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(`POST`, SEND_URL);
-    xhr.responseType = `json`;
+    const xhr = createRequest(`POST`);
     xhr.addEventListener(`load`, () => {
       onSuccess();
     });

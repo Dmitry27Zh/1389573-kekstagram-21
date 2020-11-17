@@ -73,8 +73,7 @@
   const setEffectLevelControls = (newCoord) => {
     effectPinElement.style.left = `${newCoord}px`;
     effectDepthElement.style.width = `${newCoord}px`;
-    const perc = newCoord * 100 / effectLineElement.offsetWidth;
-    effectValueElement.value = perc;
+    effectValueElement.value = newCoord * 100 / effectLineElement.offsetWidth;
   };
 
   const getFilterValue = () => {
@@ -88,8 +87,7 @@
   };
 
   const setFilterOnImage = () => {
-    const newValue = getFilterValue();
-    imageElement.style.filter = newValue;
+    imageElement.style.filter = getFilterValue();
   };
 
   const removeFilter = () => {

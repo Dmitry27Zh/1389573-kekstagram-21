@@ -13,7 +13,7 @@
   };
 
   const createComment = (comment) => {
-    const newCommentElement = commentElement.cloneNode(`true`);
+    const newCommentElement = commentElement.cloneNode(true);
     newCommentElement.querySelector(`.social__picture`).src = comment.avatar;
     newCommentElement.querySelector(`.social__text`).textContent = comment.message;
     return newCommentElement;
